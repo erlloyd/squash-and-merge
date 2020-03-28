@@ -1,0 +1,30 @@
+name: Prep for Deploy
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - 'master'
+    tags-ignore:
+      - 'v*'
+
+jobs:
+  test:
+    # Job name is
+    name: Verify, Bump Version, and Tag for Release
+    # This job runs on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Bump version
+        run: |
+          git config --global user.name "test-auto-user"
+          git config --global user.email "test-auto-user"
+          npm version major
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.2.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+      - name: Push
+        run: git remote -v
+
+        

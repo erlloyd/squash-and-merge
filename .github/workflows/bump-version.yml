@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Print ref
+        run: echo $GITHUB_REF
       - name: Bump version
         run: |
           git config --global user.name "test-auto-user"

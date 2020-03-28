@@ -5,9 +5,9 @@ on:
     branches:
       - 'master'
 
-if: "! contains(toJSON(github.event.commits.*.msg), '[skip ci]')"
 jobs:
   test:
+    if: "! contains(toJSON(github.event.commits.*.msg), '[skip ci]')"
     # Job name is
     name: Verify, Bump Version, and Tag for Release
     # This job runs on Linux

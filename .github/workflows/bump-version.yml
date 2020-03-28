@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - 'master'
-    tags-ignore:
-      - 'v*'
 
+if: "! contains(toJSON(github.event.commits.*.msg), '[skip ci]')"
 jobs:
   test:
     # Job name is
@@ -21,7 +20,7 @@ jobs:
         run: |
           git config --global user.name "test-auto-user"
           git config --global user.email "test-auto-user"
-          npm version major
+          npm version major -m "Releasing %s [skip ci]"
       - name: Install SSH Client 🔑
         uses: webfactory/ssh-agent@v0.2.0
         with:
